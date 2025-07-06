@@ -1,91 +1,104 @@
-Mini Ride Booking System
-🚀 Project Overview
-This is a prototype for a lite ride-hailing app designed for smaller cities in Pakistan, with a focus on female-friendly features, particularly for bike rides. The app allows passengers to register/login, request rides, view ride status, and view ride history. Drivers can accept/reject rides. The app uses a feminine color scheme (#ED008C pink and white) to align with the female-friendly branding.
-🌟 Tech Stack
+Here's your **well-structured `Design_Document.md` file** in Markdown format:
 
-Frontend: React with TypeScript, Vite
-Styling: Tailwind CSS
-Routing: React Router
-Data Storage: LocalStorage (simulating backend)
-Icons: Heroicons
-UUID: uuid for generating unique IDs
+````md
+# Design Document
 
-🧠 Assumptions
+## 1. Tech Stack Selection
 
-No real backend or GPS integration; pickup and drop-off locations are text inputs.
-Data is stored in LocalStorage to simulate persistence.
-Driver matching considers ride type and gender preference (female passengers can request female drivers for bikes).
-Ride status transitions are simulated via UI controls.
+This prototype is developed using the following tech stack:
 
-✨ Female-Friendly Feature
+- **React (v19.1.0)** with **TypeScript**: Chosen for its component-based architecture and static typing, which ensures better maintainability and fewer runtime bugs.
+- **Vite**: Used as the build tool for its lightning-fast startup, hot module replacement (HMR), and optimized bundling for production.
+- **Tailwind CSS (v3.4.17)**: Enables utility-first styling with rapid and responsive UI development without custom CSS.
+- **React Router DOM (v7.6.3)**: Facilitates seamless and dynamic routing within the single-page application.
+- **UUID (v11.1.0)**: Ensures unique identifiers for entities like users and rides, critical for mapping and simulation.
+- **Local Storage**: Employed to mimic database behavior, storing users and rides persistently across sessions during development.
 
-Female passengers can select female drivers for bike rides.
-Male passengers cannot select female drivers.
-Gender is captured during registration for both passengers and drivers.
+> This stack allows for fast prototyping with minimal setup, focusing on a clean frontend experience.
 
-📊 Data Model
-Passenger
-{
+---
+
+## 2. Assumptions
+
+To keep the prototype simple and focused on user flow, the following assumptions are made:
+
+- **Authentication** is mocked using static email-password checks; no JWT, OAuth, or backend auth.
+- **Locations** are plain text (e.g., `'Mall Road'`) instead of GPS coordinates or map integration.
+- **Driver acceptance** is updated manually (simulating button clicks), avoiding real-time matching.
+- **Payment, notifications, and maps** are not implemented to reduce complexity.
+- **Persistence** is managed with browser-based Local Storage.
+- **Single-user session** is assumed—no multi-user or concurrent session management.
+
+> These assumptions help isolate the core functionality for testing and demonstration.
+
+---
+
+## 3. Data Model
+
+The system revolves around three core entities: `User`, `Driver`, and `Ride`.
+
+### ➤ User
+
+```ts
+type Gender = 'male' | 'female';
+type UserType = 'passenger' | 'driver';
+
+interface User {
   id: string;
   name: string;
-  gender: 'male' | 'female';
+  gender: Gender;
   email: string;
   password: string;
+  type: UserType;
 }
+````
 
-Driver
-{
-  id: string;
-  name: string;
-  gender: 'male' | 'female';
-  vehicleType: 'Bike' | 'Car' | 'Rickshaw';
+* A User can be either a Passenger or a Driver.
+
+### ➤ Driver (Extends User)
+
+```ts
+type VehicleType = 'Bike' | 'Car' | 'Rickshaw';
+
+interface Driver extends User {
+  vehicleType: VehicleType;
   availability: boolean;
 }
+```
 
-Ride
-{
+* Adds vehicle type and availability status for ride assignment.
+
+### ➤ Ride
+
+```ts
+type RideStatus = 'Requested' | 'Accepted' | 'In Progress' | 'Completed';
+
+interface Ride {
   id: string;
   passengerId: string;
   driverId?: string;
-  pickup: string;
-  drop: string;
-  rideType: 'Bike' | 'Car' | 'Rickshaw';
-  preferredDriverGender?: 'male' | 'female';
-  status: 'Requested' | 'Accepted' | 'In Progress' | 'Completed';
+  pickupLocation: string;
+  dropLocation: string;
+  rideType: VehicleType;
+  preferredDriverGender?: Gender;
+  status: RideStatus;
 }
+```
 
-🧩 Project Structure
-src/
-├── pages/
-│   ├── LoginPage.tsx
-│   ├── RegisterPage.tsx
-│   ├── PassengerDashboard.tsx
-│   ├── DriverDashboard.tsx
-├── App.tsx
-├── index.tsx
-├── types.ts
-├── auth.ts
-├── ride.ts
-├── index.css
-├── tailwind.config.js
-├── vite.config.ts
-├── package.json
+* Links to a Passenger via `passengerId` and optionally a Driver via `driverId`.
 
-📝 Setup Instructions
+---
 
-Clone the repository: git clone <repo-url>
-Install dependencies: npm install
-Run the app: npm run dev
-Build for production: npm run build
+## 4. Relationships Overview
 
-📒 Submission Notes
+* A **User** can act as a **Passenger** or a **Driver**.
+* A **Passenger** may create multiple **Rides**.
+* A **Driver** may be assigned to multiple **Rides**, if available.
+* Each **Ride** connects one **Passenger**, and optionally one **Driver**.
 
-Code: Push to a public GitHub repository.
-Demo Video: Record a ~5-minute video explaining the UI, data flow, and female-friendly feature.
-Design Document: Included as this README.md.
-ER Diagram: [Include a link to a draw.io diagram or similar tool showing the data model relationships.]
+> The system structure supports extensibility (e.g., adding trip history, rating systems) in future iterations.
 
-🎨 UI/UX
+```
 
-Colors: #ED008C (feminine pink), #C7007A (hover), white background.
-Style: Rounded corners, smooth transitions, shadow effects, and Heroicons for a feminine, modern look.
+Let me know if you'd like this exported to a `.md` file or need a visual ER diagram added.
+```
