@@ -1,6 +1,3 @@
-Here's your **well-structured `Design_Document.md` file** in Markdown format:
-
-````md
 # Design Document
 
 ## 1. Tech Stack Selection
