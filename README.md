@@ -95,7 +95,3 @@ interface Ride {
 
 > The system structure supports extensibility (e.g., adding trip history, rating systems) in future iterations.
 
-```
-
-Let me know if you'd like this exported to a `.md` file or need a visual ER diagram added.
-```
