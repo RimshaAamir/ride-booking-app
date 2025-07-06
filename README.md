@@ -95,3 +95,46 @@ interface Ride {
 
 > The system structure supports extensibility (e.g., adding trip history, rating systems) in future iterations.
 
+
+## 5. Project Setup & Running Instructions
+
+To run this Vite-based React + TypeScript project locally, follow these steps:
+
+### ➤ Prerequisites
+
+Ensure you have the following installed:
+
+* **Node.js** (v18 or higher recommended)
+* **npm** (comes with Node.js) or **yarn**
+
+### ➤ Installation Steps
+
+```bash
+# 1. Clone the repository
+git clone <your-repo-url>
+cd <your-project-folder>
+
+# 2. Install dependencies
+npm install
+# or
+yarn install
+
+# 3. Start the development server
+npm run dev
+# or
+yarn dev
+```
+
+> This will start the app at `http://localhost:5173` (default Vite port). Open this in your browser to view the app.
+
+### ➤ Build for Production
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+> The production-ready files will be generated in the `dist/` folder.
+
+
